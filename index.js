@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const fs = require('fs-extra');
-const  {MongoClient}  = require('mongodb');
+const  { MongoClient }  = require('mongodb');
 require('dotenv').config()
 const app = express()
 const port = 4000
@@ -28,8 +28,6 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
   const postsCollection = client.db("facebook").collection("posts");
   const photoCollection = client.db("facebook").collection("photo");
-  // perform actions on the collection object
-
 
 
  /////show post
