@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
     "fs-extra": "^7.0.1",
+    "heroku": "^7.56.0",
     "migrate": "^1.7.0",
     "mongodb": "^3.6.9",
     "nx": "^12.5.6"
