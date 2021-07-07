@@ -27,7 +27,7 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const postsCollection = client.db("facebook").collection("posts");
-  const photoCollection = client.db("facebook").collection("photo");
+  console.log('connected')
 
 
  /////show post
