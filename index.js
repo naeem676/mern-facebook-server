@@ -8,14 +8,14 @@ require('dotenv').config()
 const app = express()
 const port = 4000
 
-const corsOptions ={
-  origin:'http://localhost:3000', 
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200
-}
+// const corsOptions ={
+//   origin:'http://localhost:3000', 
+//   credentials:true,            //access-control-allow-credentials:true
+//   optionSuccessStatus:200
+// }
 
 
-app.use(cors(corsOptions));
+app.use(cors());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -53,11 +53,36 @@ client.connect(err => {
       const caption = req.body.caption;
       const image = req.files?.image;
       const filePath = `${__dirname}/service/${image?.name}`;
-      
-       
-         if (caption && image){
-       
-       
+
+      if(!image){
+        postsCollection.insertOne({name, email, caption, photo})
+        .then(result => {
+          res.status(200).send(result.insertedCount > 0);
+        })
+      } else if(!caption){  
+        
+        image.mv(filePath, err => {
+          if(err){
+            res.status(500).send({msg:'Failed to upload Image'});
+          }
+          const newImage = fs.readFileSync(filePath);
+          const encImg = newImage.toString('base64');
+          const postImage = {
+            contentType: req.files?.image.mimetype,
+            size:req.files?.image.size,
+            img: Buffer.from(encImg, 'base64')
+          }
+          postsCollection.insertOne({postImage, name, email, photo})
+          .then(result => {
+            fs.remove(filePath, err => {
+              if(err){
+                res.status(500).send({msg:'Failed to'});
+              }
+              res.send(result.insertedCount > 0);
+            })
+          })
+        })
+       } else {
         image.mv(filePath, err => {
           if(err){
             res.status(500).send({msg:'Failed to upload Image'});
@@ -79,36 +104,9 @@ client.connect(err => {
             })
           })
         })
-      } else if(!caption){
-           
-        
-       image.mv(filePath, err => {
-         if(err){
-           res.status(500).send({msg:'Failed to upload Image'});
-         }
-         const newImage = fs.readFileSync(filePath);
-         const encImg = newImage.toString('base64');
-         const postImage = {
-           contentType: req.files?.image.mimetype,
-           size:req.files?.image.size,
-           img: Buffer.from(encImg, 'base64')
-         }
-         postsCollection.insertOne({postImage, name, email, photo})
-         .then(result => {
-           fs.remove(filePath, err => {
-             if(err){
-               res.status(500).send({msg:'Failed to'});
-             }
-             res.send(result.insertedCount > 0);
-           })
-         })
-       })
-      } else {
-        postsCollection.insertOne({name, email, caption, photo})
-        .then(result => {
-          res.status(200).send(result.insertedCount > 0);
-        })
-      }
+       }
+      
+       
       
   })
  
@@ -120,4 +118,4 @@ app.get('/', (req, res) => {
   res.send('hi World!')
 })
 
-app.listen(process.env.PORT || port)
+app.listen( process.env.PORT || port)
