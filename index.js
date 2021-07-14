@@ -30,7 +30,7 @@ app.use(fileUpload());
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.rg1nk.mongodb.net/facebook?retryWrites=true&w=majority`;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const client = new MongoClient(uri, {useCreateIndex:true, useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const postsCollection = client.db("facebook").collection("posts");
   
