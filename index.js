@@ -74,12 +74,9 @@ client.connect(err => {
           }
           postsCollection.insertOne({postImage, name, email, photo})
           .then(result => {
-            fs.remove(filePath, err => {
-              if(err){
-                res.status(500).send({msg:'Failed to'});
-              }
+           
               res.send(result.insertedCount > 0);
-            })
+            
           })
         })
        } else {
@@ -96,12 +93,9 @@ client.connect(err => {
           }
           postsCollection.insertOne({postImage, name, email, caption, photo})
           .then(result => {
-            fs.remove(filePath, err => {
-              if(err){
-                res.status(500).send({msg:'Failed to'});
-              }
+            
               res.send(result.insertedCount > 0);
-            })
+            
           })
         })
        }
