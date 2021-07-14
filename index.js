@@ -8,14 +8,14 @@ require('dotenv').config()
 const app = express()
 const port = 4000
 
-const corsOptions ={
-  origin:'http://localhost:3000', 
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200
-}
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*"),
+  res.setHeader("Access-Control-Allow-Headers", "*"),
+  next();
+})
 
 
-app.use(cors(corsOptions));
+app.use(cors());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
