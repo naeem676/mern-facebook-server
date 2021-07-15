@@ -11,16 +11,16 @@ const port = 4000
 
 
 
-app.use(cors());
+app.use(cors({
+  origin:'http://localhost:3000/',
+  credentials: true
+}));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://localhost:3000")
-}) 
 
 app.use(express.static('service'));
 
