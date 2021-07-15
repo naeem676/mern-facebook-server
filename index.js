@@ -114,4 +114,4 @@ app.get('/', (req, res) => {
   res.send('hi World!')
 })
 
-app.listen( process.env.PORT || port)
+app.listen( port || process.env.PORT)
