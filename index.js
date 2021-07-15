@@ -12,8 +12,8 @@ const port = 4000
 
 
 app.use(cors({
-  origin:'http://localhost:3000/',
-  credentials: true
+  origin:'http://localhost:3000',
+  methods:["GET", "POST"]
 }));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
