@@ -5,6 +5,7 @@ const fileUpload = require('express-fileupload');
 const fs = require('fs-extra');
 const  { MongoClient }  = require('mongodb');
 require('dotenv').config()
+const https = require('https');
 const app = express()
 const port = 4000
 
@@ -18,15 +19,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*"),
-  res.setHeader("Access-Control-Allow-Headers", "*"),
-  next();
-})
+
 
 app.use(express.static('service'));
 
 app.use(fileUpload());
+
+// CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
+app.all('*', (req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://localhost:3000");
+  next();
+});
+
+
 
 
 
@@ -116,4 +121,6 @@ app.get('/', (req, res) => {
   res.send('hi World!')
 })
 
-app.listen( process.env.PORT || port)
+const httpsServer = https.createServer(app);
+
+httpsServer.listen( process.env.PORT || port)
