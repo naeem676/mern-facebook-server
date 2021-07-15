@@ -6,7 +6,7 @@ const fs = require('fs-extra');
 const  { MongoClient }  = require('mongodb');
 require('dotenv').config()
 const app = express()
-const port = 4000
+const port = process.env.PORT || 4000
 
 
 
@@ -114,4 +114,4 @@ app.get('/', (req, res) => {
   res.send('hello World!')
 })
 
-app.listen( process.env.PORT || port)
+app.listen(port)
