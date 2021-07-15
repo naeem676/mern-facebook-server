@@ -12,7 +12,7 @@ const port = 4000
 
 
 app.use(cors({
-  origin:'http://localhost:3000',
+  origin:'*',
   methods:["GET", "POST"]
 }));
 // parse application/x-www-form-urlencoded
@@ -37,7 +37,7 @@ client.connect(err => {
   const postsCollection = client.db("facebook").collection("posts");
   
 
-
+  
  /////show post
  app.get('/posts', (req, res) => {
    postsCollection.find({})
