@@ -111,7 +111,7 @@ client.connect(err => {
 
 
 app.get('/', (req, res) => {
-  res.send('hi World!')
+  res.send('hello World!')
 })
 
 app.listen( process.env.PORT || port)
