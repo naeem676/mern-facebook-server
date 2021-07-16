@@ -4,10 +4,9 @@ const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const fs = require('fs-extra');
 const  { MongoClient }  = require('mongodb');
-const timeout = require('connect-timeout')
 require('dotenv').config()
 const app = express()
-const port = process.env.PORT || 4000
+const port =  4000
 
 
 
@@ -28,19 +27,10 @@ app.use(express.static('service'));
 app.use(fileUpload());
 
 
-app.use(timeout('60s'))
-
-
-
-
-
-
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.rg1nk.mongodb.net/facebook?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const postsCollection = client.db("facebook").collection("posts");
-  
-
   
  /////show post
  app.get('/posts', (req, res) => {
@@ -118,4 +108,4 @@ app.get('/', (req, res) => {
   res.send('hello World!')
 })
 
-app.listen(port)
+app.listen(process.env.PORT || port)
