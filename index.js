@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const fs = require('fs-extra');
 const  { MongoClient }  = require('mongodb');
+const timeout = require('connect-timeout')
 require('dotenv').config()
 const app = express()
 const port = process.env.PORT || 4000
@@ -27,6 +28,7 @@ app.use(express.static('service'));
 app.use(fileUpload());
 
 
+app.use(timeout('60s'))
 
 
 
