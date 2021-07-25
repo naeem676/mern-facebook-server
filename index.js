@@ -12,6 +12,7 @@ const port =  4000
 
 
 app.use(cors({
+  Host: 'damp-dawn-60314.herokuapp.com',
   origin:'*',
   methods:["GET", "POST"]
 }));
