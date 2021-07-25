@@ -12,6 +12,7 @@ const port =  4000
 
 
 app.use(cors({
+  Host: damp-dawn.com,
   origin:'*',
   methods:["GET", "POST"]
 }));
