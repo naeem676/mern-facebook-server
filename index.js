@@ -11,11 +11,18 @@ const port =  4000
 
 
 
-app.use(cors({
-  Host: damp-dawn.com,
-  origin:'*',
-  methods:["GET", "POST"]
-}));
+// app.use(cors({
+  
+//   origin:'*',
+//   methods:["GET", "POST"]
+// }));
+
+app.use((req,res,next)=>{
+    res.setHeader('Acces-Control-Allow-Origin','*');
+    res.setHeader('Acces-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
+    res.setHeader('Acces-Contorl-Allow-Methods','Content-Type','Authorization');
+    next(); 
+})
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
